@@ -1,14 +1,17 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import { RootLayout } from './components/Layout/RootLayout';
+
 export const router = createBrowserRouter([
   {
+    element: <RootLayout/>,
     children: [
       {
         path: '/',
         element: (
             <>
                 <h1>Formulário de Simulação</h1>
-                {/*<Button variant="primary" icon={PiggyBank}>Clique aqui</Button>*/}
+                
             </>
         )
       },
