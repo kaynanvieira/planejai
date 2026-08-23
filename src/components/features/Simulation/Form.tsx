@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { saveSimulationToHistory } from '@/hooks/useSimulation'
 
 import { type SimulationFormData, simulationFormSteps } from '@/data/simulation'
 import { useSimulationStorage } from '@/hooks/useSimulationStorage'
@@ -22,10 +23,14 @@ export const SimulationForm = () => {
     const updatedFormData = { ...formData, [currentStep.id]: value }
     setFormData(updatedFormData)
 
-    console.log({ updatedFormData })
-
     if (currentStepIndex + 1 > totalSteps - 1) {
+      // 1. Salva via hook original e recupera o ID gerado
       const id = saveFormData(updatedFormData)
+
+      // 2. Registra no histórico vinculando ao mesmo ID
+      saveSimulationToHistory(updatedFormData, id)
+
+      // 3. Navega para os resultados
       void navigate(`/resultado/${id}`)
       return
     }
